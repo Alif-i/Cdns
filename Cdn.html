@@ -5,4 +5,48 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js
 https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css
 " rel="stylesheet">
 
-fetch(`https://api.mailgun.net/v3/address/validate?address=${encodeURIComponent(email)}&api_key=${apiKey}`)
+<?php
+/*
+ * Plugin Name: Validation
+ */
+
+ function show_data(){
+    ?>
+
+<form id="emailForm">
+  <input type="email" id="email" name="email" placeholder="Enter your email" required>
+  <button type="submit">Submit</button>
+  <p id="result"></p>
+</form>
+
+<script>
+document.getElementById('emailForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form from submitting
+
+  var email = document.getElementById('email').value;
+  var apiKey = 'pubkey-f4a63b770359f9a199fc2c44f9d94dd6-llsdfnjliksadf'; 
+
+  fetch(`https://api.mailgun.net/v3/address/validate?address=${encodeURIComponent(email)}&api_key=${apiKey}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.is_valid) {
+        document.getElementById('result').textContent = 'Email is valid. Form submitted!';
+        // Proceed with form submission, e.g., using AJAX or similar
+        // If you want to actually submit the form, you can uncomment the next line
+        // document.getElementById('emailForm').submit();
+      } else {
+        document.getElementById('result').textContent = 'Invalid email. Please try again.';
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      document.getElementById('result').textContent = 'An error occurred. Please try again later.';
+    });
+});
+</script>
+
+
+    <?php
+ }
+ 
+ add_shortcode( "ad", "show_data");
