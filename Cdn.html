@@ -4,3 +4,5 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js
 <link href="
 https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css
 " rel="stylesheet">
+
+fetch(`https://api.mailgun.net/v3/address/validate?address=${encodeURIComponent(email)}&api_key=${apiKey}`)
